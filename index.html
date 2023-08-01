@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mảng 2 chiều</title>
+    <style>
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Nhập số hàng và cột của mảng 2 chiều</h2>
+    <label for="numRows">Số hàng:</label>
+    <input type="number" id="numRows">
+
+    <label for="numColumns">Số cột:</label>
+    <input type="number" id="numColumns">
+    <br>
+    <br>
+
+    <button onclick="generateArrayInputs1()">Tạo mảng 1</button>
+    <br>
+    <br>
+
+    <div id="arrayInputs1"></div>
+    <br>
+    <br>
+
+    <button onclick="displayArray()">Hiển thị mảng</button>
+    <br>
+    <br>
+    <br>
+
+    <button onclick="printRows()">Hiển thị hàng chẵn</button>
+    <br>
+    <br>
+    <br>
+    
+    <button onclick="printCol()">Giá trị lớn nhất cột 1</button>
+    <br>
+    <br>
+    <br>
+
+    <button onclick="printMax()">Giá trị lớn nhất của mảng</button>
+    <br>
+    <br>
+    <br>
+
+    <button onclick="printMin()">Giá trị nhỏ nhất của mảng</button>
+    <br>
+    <br>
+    <br>
+
+    <button onclick="printSum()">Tong chan le</button>
+
+    <div id="output"></div>
+    <div id="outputrows"></div>
+    <div id="outputcol"></div>
+    <div id="outputmax"></div>
+    <div id="outputmin"></div>
+    <div id="outputsum"></div>
+
+    <script>
+        function generateArrayInputs1() {
+            const numRows = parseInt(document.getElementById('numRows').value);
+            const numColumns = parseInt(document.getElementById('numColumns').value);
+
+            let arrayInputsHTML = 'Ma tran 1:<br>';
+            for (let i = 0; i < numRows; i++) {
+                for (let j = 0; j < numColumns; j++) {
+                    arrayInputsHTML += `<input type="number" id="input-${i}-${j}" placeholder="${i + 1},${j + 1}"> `;
+                }
+                arrayInputsHTML += '<br>';
+            }
+
+            document.getElementById('arrayInputs1').innerHTML = arrayInputsHTML;
+        }
+
+        function displayArray() {
+            const numRows = parseInt(document.getElementById('numRows').value);
+            const numColumns = parseInt(document.getElementById('numColumns').value);
+
+            let outputHTML = '<h2>Kết quả mảng:</h2><table>';
+            for (let i = 0; i < numRows; i++) {
+                outputHTML += '<tr>';
+                for (let j = 0; j < numColumns; j++) {
+                    const value = document.getElementById(`input-${i}-${j}`).value;
+                    outputHTML += `<td>${value}</td>`;
+                }
+                outputHTML += '</tr>';
+            }
+            outputHTML += '</table>';
+
+            document.getElementById('output').innerHTML = outputHTML;
+        }
+
+        function printRows() {
+            const numRows = parseInt(document.getElementById('numRows').value);
+            const numColumns = parseInt(document.getElementById('numColumns').value);
+
+            let outputHTML = '<h2>Hang chan cua ma tran:</h2><table>';
+            for (let i = 0; i < numRows; i++) {
+                if (i % 2 != 0) {
+                    outputHTML += '<tr>';
+                    for (let j = 0; j < numColumns; j++) {
+                        const value = document.getElementById(`input-${i}-${j}`).value;
+                        outputHTML += `<td>${value}</td>`;
+                    }
+                }
+                outputHTML += '</tr>';
+            }
+            outputHTML += '</table>';
+
+            document.getElementById('outputrows').innerHTML = outputHTML;
+        }
+
+        function printCol() {
+            const numRows = parseInt(document.getElementById('numRows').value);
+            const numColumns = parseInt(document.getElementById('numColumns').value);
+
+            let max = parseInt(document.getElementById(`input-0-0`).value);
+            let outputHTML = '<h2>Gia tri lon nhat cot 1:</h2>';
+            for (let i = 0; i < numRows; i++) {
+                outputHTML += '<tr>';
+                for (let j = 0; j < numColumns; j++) {
+                    const value = document.getElementById(`input-${i}-${j}`).value;
+                    if (j == 0 && value > max) {
+                        max = value;
+                    }
+                }
+                outputHTML += '</tr>';
+            }
+
+            outputHTML += `<p>${max}</p>`;
+
+            document.getElementById('outputcol').innerHTML = outputHTML;
+        }
+
+        function printMax() {
+            const numRows = parseInt(document.getElementById('numRows').value);
+            const numColumns = parseInt(document.getElementById('numColumns').value);
+
+            let maxn = -Infinity
+            let outputHTML = '<h2>Gia tri lon nhat của mảng:</h2>';
+            for (let i = 0; i < numRows; i++) {
+                outputHTML += '<tr>';
+                for (let j = 0; j < numColumns; j++) {
+                    const value = document.getElementById(`input-${i}-${j}`).value;
+                    if (value > maxn) {
+                        maxn = value;
+                    }
+                }
+                outputHTML += '</tr>';
+            }
+
+            outputHTML += `<p>${maxn}</p>`;
+
+            document.getElementById('outputmax').innerHTML = outputHTML;
+        }
+
+        function printMin() {
+            const numRows = parseInt(document.getElementById('numRows').value);
+            const numColumns = parseInt(document.getElementById('numColumns').value);
+
+            let min = Infinity;
+            let outputHTML = '<h2>Gia tri nho nhat của mảng:</h2>';
+            for (let i = 0; i < numRows; i++) {
+                outputHTML += '<tr>';
+                for (let j = 0; j < numColumns; j++) {
+                    const value = document.getElementById(`input-${i}-${j}`).value;
+                    if (value < min) {
+                        min = value;
+                    }
+                }
+                outputHTML += '</tr>';
+            }
+
+            outputHTML += `<p>${min}</p>`;
+
+            document.getElementById('outputmin').innerHTML = outputHTML;
+        }
+
+        function printSum() {
+            const numRows = parseInt(document.getElementById('numRows').value);
+            const numColumns = parseInt(document.getElementById('numColumns').value);
+
+            let outputHTML = '<h2>Tong:</h2>';
+            let summ = 0;
+            for (let i = 0; i < numRows; i++) {
+                if (i % 2 != 0) {
+                    outputHTML += '<tr>';
+                    for (let j = 0; j < numColumns; j++) {
+                        if (j % 2 != 0) {
+                            const value = parseInt(document.getElementById(`input-${i}-${j}`).value);
+                            summ += value
+                        }
+                    }
+                }
+                outputHTML += '</tr>';
+            }
+
+            let sumn = 0;
+            for (let i = 0; i < numRows; i++) {
+                if (i % 2 == 0) {
+                    outputHTML += '<tr>';
+                    for (let j = 0; j < numColumns; j++) {
+                        if (j % 2 == 0) {
+                            const value = parseInt(document.getElementById(`input-${i}-${j}`).value);
+                            sumn += value
+                        }
+                    }
+                }
+                outputHTML += '</tr>';
+            }
+
+            let sum = 0;
+            sum = summ + sumn;
+            outputHTML += `<p>${sum}</p>`;
+            document.getElementById('outputsum').innerHTML = outputHTML;
+        }
+    </script>
+</body>
+
+</html>
